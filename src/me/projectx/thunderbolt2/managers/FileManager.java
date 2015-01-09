@@ -47,7 +47,6 @@ public abstract class FileManager {
 									tf.set(key, value);
 								}
 							}
-							//files.add(tf);
 							System.out.println("[Thunderbolt 2] Loaded " + tf.getName() + ".json");
 							this.interrupt();
 						}
