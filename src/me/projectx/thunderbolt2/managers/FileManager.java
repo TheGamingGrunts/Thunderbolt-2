@@ -43,7 +43,9 @@ public abstract class FileManager {
 							while(i.hasNext()){
 								String key = (String) i.next();
 								Object value = jobj.get(key);
-								tf.set(key, value);
+								if (!key.equals("") && !value.equals("")){
+									tf.set(key, value);
+								}
 							}
 							//files.add(tf);
 							System.out.println("[Thunderbolt 2] Loaded " + tf.getName() + ".json");

@@ -22,6 +22,7 @@ public class ThunderFile {
 			try {
 				f.createNewFile();
 				JSONObject obj = new JSONObject();
+				obj.put("", "");
 				PrintWriter writer = new PrintWriter(new FileWriter(path + File.separator + name + ".json", true));
 				writer.write(obj.toJSONString());
 				writer.close();
