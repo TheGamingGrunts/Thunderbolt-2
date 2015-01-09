@@ -20,36 +20,33 @@ public abstract class FileManager {
 	
 	private List<ThunderFile> files = new ArrayList<ThunderFile>();
 	
-	protected ThunderFile get(String name){
+	public ThunderFile get(String name){
 		for (ThunderFile tf : files){
-			if (tf.getName().equalsIgnoreCase(name)){
+			if (tf.getName().equals(name)){
 				return tf;
 			}
 		}
 		return null;
 	}
 	
-	protected void load(String name, String path) throws FileAlreadyLoadedException{
+	public void load(final String name, String path) throws FileAlreadyLoadedException{
 		if (get(name) == null){
 			final ThunderFile tf = new ThunderFile(name, path);
 			files.add(tf);
-			JSONParser parser = new JSONParser();
 			try {
-				final JSONObject jobj = (JSONObject)parser.parse(new FileReader(path + File.separator + name + ".json"));
+				final JSONObject jobj = (JSONObject)new JSONParser().parse(new FileReader(path + File.separator + name + ".json"));
 				new Thread(){
 					public void run(){
-						if (jobj.size() != 0){
-							Iterator<?> i = jobj.keySet().iterator();
-							while(i.hasNext()){
-								String key = (String) i.next();
-								Object value = jobj.get(key);
-								if (!key.equals("") && !value.equals("")){
-									tf.set(key, value);
-								}
+						Iterator<?> i = jobj.keySet().iterator();
+						while(i.hasNext()){
+							String key = (String) i.next();
+							Object value = jobj.get(key);
+							if (!key.equals("") && !value.equals("")){
+								tf.set(key, value);
 							}
-							System.out.println("[Thunderbolt 2] Loaded " + tf.getName() + ".json");
-							this.interrupt();
 						}
+						System.out.println("[Thunderbolt 2] Loaded " + tf.getName() + ".json");
+						this.interrupt();		
 					}
 				}.start();	
 			} catch(IOException | ParseException e) {
