@@ -94,7 +94,7 @@ And here's the output:
 
 ```java
 [Thunderbolt 2] Loaded test.json
-2.0
+2.5
 derp
 [String 1, String 2, String 3]
 ```
