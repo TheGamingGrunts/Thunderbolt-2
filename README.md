@@ -6,6 +6,7 @@
 [Jar Download](https://dl.project-x.me/files/Thunderbolt2.jar)
 
 ##Table of Contents
+- [JavaDocs] (https://docs.project-x.me/thunderbolt)
 - [Syntax] (https://github.com/TheGamingGrunts/Thunderbolt-2#syntax)
 - [Example Usage] (https://github.com/TheGamingGrunts/Thunderbolt-2#example-usage)
 
