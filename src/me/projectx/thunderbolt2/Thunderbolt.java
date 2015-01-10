@@ -21,13 +21,10 @@ public class Thunderbolt extends FileManager {
 	 * 
 	 * @param name : The name of the file to load.
 	 * @param path : The path to the file.
+	 * @throws FileAlreadyLoadedException 
 	 */
-	public void load(String name, String path){
-		try {
-			super.load(name, path);
-		} catch(FileAlreadyLoadedException e) {
-			e.printStackTrace();
-		}
+	public void load(String name, String path) throws FileAlreadyLoadedException{
+		super.load(name, path);
 	}
 	
 	/**
@@ -36,24 +33,17 @@ public class Thunderbolt extends FileManager {
 	 * @param name : The name of the file to unload
 	 * @throws FileNotLoadedException
 	 */
-	public void unload(String name){
-		try {
-			super.unload(name);
-		} catch(FileNotLoadedException e) {
-			e.printStackTrace();
-		}
+	public void unload(String name) throws FileNotLoadedException{
+		super.unload(name);
 	}
 	
 	/**
 	 * Delete a file and remove it from memory
 	 * 
 	 * @param name : The name of the file to delete
+	 * @throws FileNotLoadedException 
 	 */
-	public void delete(String name){
-		try {
-			super.delete(name);
-		} catch(FileNotLoadedException e) {
-			e.printStackTrace();
-		}
+	public void delete(String name) throws FileNotLoadedException{
+		super.delete(name);
 	}
 }
