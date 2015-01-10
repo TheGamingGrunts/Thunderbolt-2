@@ -3,8 +3,13 @@
 
 <p>Want an easy and fast way to store your data? Well, look no further! Thunderbolt is a Java file library designed from the ground-up to be as fast as possible, in addition to using a JSON (JavaScript Object Notation) backend for file storage. </p>
 
-==
+[Jar Download](https://dl.project-x.me/files/Thunderbolt2.jar)
 
+##Table of Contents
+- [Syntax] (https://github.com/TheGamingGrunts/Thunderbolt-2#syntax)
+- [Example Usage] (https://github.com/TheGamingGrunts/Thunderbolt-2#example-usage)
+
+==
 ### Syntax
 The Thunderbolt syntax is extremely simple and easy to use. All you have to do is instantiate the Thunderbolt class.
 
