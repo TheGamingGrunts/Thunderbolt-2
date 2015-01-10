@@ -14,7 +14,7 @@ import me.projectx.thunderbolt2.org.json.JSONObject;
 public class ThunderFile {
 	
 	private String name, path;
-	private Map<String, Object> map = new HashMap<String, Object>();
+	public Map<String, Object> map = new HashMap<String, Object>();
 	
 	@SuppressWarnings("unchecked")
 	public ThunderFile(String name, String path){
@@ -90,19 +90,97 @@ public class ThunderFile {
 		
 	}
 	
-    public List<?> getList(String key) {
-        Object def = map.get(key);
-        return getList(path, (def instanceof List) ? (List<?>) def : null);
+    private List<?> getList(String key) {
+        Object o = map.get(key);
+        return getList(path, (o instanceof List) ? (List<?>) o : null);
     }
     
     public List<String> getStringList(String key){
     	List<?> temp = getList(key);
     	List<String> list = new ArrayList<String>();
     	for (Object o : temp){
-    		list.add(String.valueOf(o));
+    		if (o instanceof String){
+    			list.add(String.valueOf(o));
+    		}
     	}
     	return list;
     }
+    
+    public List<Byte> getByteList(String key){
+    	List<?> temp = getList(key);
+    	List<Byte> list = new ArrayList<Byte>();
+    	for (Object o : temp){
+    		if (o instanceof Byte){
+    			list.add((Byte)o);
+    		}else if (o instanceof String){
+    			list.add(Byte.valueOf((String)o));
+    		}
+    	}
+    	return list;
+    }
+    
+    public List<Integer> getIntList(String key){
+    	List<?> temp = getList(key);
+    	List<Integer> list = new ArrayList<Integer>();
+    	for (Object o : temp){
+    		if (o instanceof Integer){
+    			list.add((Integer)o);
+    		}else if (o instanceof String){
+    			list.add(Integer.valueOf((String)o));
+    		}
+    	}
+    	return list;
+    }
+    
+    public List<Double> getDoubleList(String key){
+    	List<?> temp = getList(key);
+    	List<Double> list = new ArrayList<Double>();
+    	for (Object o : temp){
+    		if (o instanceof Double){
+    			list.add((Double)o);
+    		}else if (o instanceof String){
+    			list.add(Double.valueOf((String)o));
+    		}
+    	}
+    	return list;
+    }
+    
+    public List<Long> getLongList(String key){
+    	List<?> temp = getList(key);
+    	List<Long> list = new ArrayList<Long>();
+    	for (Object o : temp){
+    		if (o instanceof Long){
+    			list.add((Long)o);
+    		}else if (o instanceof String){
+    			list.add(Long.valueOf((String)o));
+    		}
+    	}
+    	return list;
+    }
+    
+    public List<Float> getFloatList(String key){
+    	List<?> temp = getList(key);
+    	List<Float> list = new ArrayList<Float>();
+    	for (Object o : temp){
+    		if (o instanceof Integer){
+    			list.add((Float)o);
+    		}else if (o instanceof String){
+    			list.add(Float.valueOf((String)o));
+    		}
+    	}
+    	return list;
+    }
+
+    /*public Map<?, ?> getMap(String key){
+    	Iterator<?> i = map.entrySet().iterator();
+    	Map<String, Object> newMap = new HashMap<String, Object>();
+    	while(i.hasNext()){
+    		String key1 = (String)i.next();
+    		Object value = map.get(key1);
+    		newMap.put(key1, value);
+    	}
+    	return newMap;
+    }*/
 	
 	public void save(){
 		new Thread(){
