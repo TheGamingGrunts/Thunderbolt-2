@@ -24,11 +24,11 @@ public class ThunderFile {
 		if (!f.exists()){
 			try {
 				f.createNewFile();
-				JSONObject obj = new JSONObject();
+				/*JSONObject obj = new JSONObject();
 				obj.put("", "");
 				PrintWriter writer = new PrintWriter(new FileWriter(path + File.separator + name + ".json"));
 				writer.write(obj.toJSONString());
-				writer.close();
+				writer.close();*/
 				System.out.println("[ThunderBolt 2] Created new file " + name + ".json at " + path);
 			} catch(IOException e) {
 				e.printStackTrace();
