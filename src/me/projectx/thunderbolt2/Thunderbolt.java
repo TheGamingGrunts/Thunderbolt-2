@@ -5,6 +5,11 @@ import me.projectx.thunderbolt2.exceptions.FileNotLoadedException;
 import me.projectx.thunderbolt2.managers.FileManager;
 import me.projectx.thunderbolt2.models.ThunderFile;
 
+/**
+ * The main class of Thunderbolt containing key accessor methods
+ * 
+ * @author Daniel S. (The Gaming Grunts)
+ */
 public class Thunderbolt extends FileManager {
 	
 	/**

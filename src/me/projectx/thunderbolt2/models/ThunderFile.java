@@ -9,14 +9,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.projectx.thunderbolt2.interfaces.FileLayout;
 import me.projectx.thunderbolt2.org.json.JSONObject;
 
-public class ThunderFile {
+/**
+ * File wrapper class containing numerous useful methods for setting, saving, and retrieving information
+ * from JSON files
+ * 
+ * @author Daniel S. (The Gaming Grunts)
+ */
+public class ThunderFile implements FileLayout{
 	
 	private String name, path;
 	public Map<String, Object> map = new HashMap<String, Object>();
 	
-	@SuppressWarnings("unchecked")
+	/**
+	 * @see ThunderFile 
+	 * @param name : The name of the file, excluding the .json extension.
+	 * @param path : The path to the file
+	 */
 	public ThunderFile(String name, String path){
 		this.name = name;
 		this.path = path;
@@ -24,11 +35,6 @@ public class ThunderFile {
 		if (!f.exists()){
 			try {
 				f.createNewFile();
-				/*JSONObject obj = new JSONObject();
-				obj.put("", "");
-				PrintWriter writer = new PrintWriter(new FileWriter(path + File.separator + name + ".json"));
-				writer.write(obj.toJSONString());
-				writer.close();*/
 				System.out.println("[ThunderBolt 2] Created new file " + name + ".json at " + path);
 			} catch(IOException e) {
 				e.printStackTrace();
@@ -84,12 +90,20 @@ public class ThunderFile {
 		return Boolean.parseBoolean(map.get(key).toString());
 	}
     
+	/**
+	 * Courtesy of the Bukkit Project 
+	 * {@link https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/configuration/MemorySection.java#L355}
+	 */
 	private List<?> getList(String key, List<?> l){
 		Object o = map.get(key);
 		return (List<?>) ((o instanceof List) ? o : l);
 		
 	}
 	
+	/**
+	 * Courtesy of the Bukkit Project 
+	 * {@link https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/configuration/MemorySection.java#L360}
+	 */
     private List<?> getList(String key) {
         Object o = map.get(key);
         return getList(path, (o instanceof List) ? (List<?>) o : null);
@@ -114,6 +128,19 @@ public class ThunderFile {
     			list.add((Byte)o);
     		}else if (o instanceof String){
     			list.add(Byte.valueOf((String)o));
+    		}
+    	}
+    	return list;
+    }
+    
+    public List<Short> getShortList(String key){
+    	List<?> temp = getList(key);
+    	List<Short> list = new ArrayList<Short>();
+    	for (Object o : temp){
+    		if (o instanceof Short){
+    			list.add((Short)o);
+    		}else if (o instanceof String){
+    			list.add(Short.valueOf((String)o));
     		}
     	}
     	return list;
