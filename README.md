@@ -84,7 +84,7 @@ public class Example {
 		tf.set("Double", 2.5);
 		tf.set("herp", "derp");
 		tf.save();
-		System.out.println(tf.getDouble("Int"));
+		System.out.println(tf.getDouble("Double"));
 		System.out.println(tf.getString("herp"));
 		System.out.println(tf.getStringList("List"));
 	}
