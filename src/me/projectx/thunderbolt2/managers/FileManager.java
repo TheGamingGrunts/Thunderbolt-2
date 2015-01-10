@@ -29,26 +29,34 @@ public abstract class FileManager {
 		return null;
 	}
 	
-	public void load(final String name, String path) throws FileAlreadyLoadedException{
+	private void create(String name, String path) throws FileAlreadyLoadedException{
 		if (get(name) == null){
-			final ThunderFile tf = new ThunderFile(name, path);
-			files.add(tf);
+			files.add(new ThunderFile(name, path));
+		}else{
+			throw new FileAlreadyLoadedException("The File " + name + ".json is already loaded!");
+		}
+	}
+	
+	public void load(String name, String path) throws FileAlreadyLoadedException{
+		if (get(name) == null){
 			try {
-				final JSONObject jobj = (JSONObject)new JSONParser().parse(new FileReader(path + File.separator + name + ".json"));
-				new Thread(){
-					public void run(){
+				File f = new File(path + File.separator + name + ".json");
+				if (f.exists()){
+					if (f.length() != 0){
+						JSONObject jobj = (JSONObject)new JSONParser().parse(new FileReader(f));
+						ThunderFile tf = new ThunderFile(name, path);
 						Iterator<?> i = jobj.keySet().iterator();
 						while(i.hasNext()){
 							String key = (String) i.next();
 							Object value = jobj.get(key);
-							if (!key.equals("") && !value.equals("")){
-								tf.set(key, value);
-							}
+							tf.set(key, value);
 						}
-						System.out.println("[Thunderbolt 2] Loaded " + tf.getName() + ".json");
-						this.interrupt();		
+						files.add(tf);
+						System.out.println("[Thunderbolt 2] Loaded " + tf.getName() + ".json");	
 					}
-				}.start();	
+				}else{
+					create(name, path);
+				}
 			} catch(IOException | ParseException e) {
 				e.printStackTrace();
 			}	
