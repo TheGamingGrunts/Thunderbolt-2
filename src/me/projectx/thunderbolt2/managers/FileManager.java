@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import me.projectx.thunderbolt2.exceptions.FileAlreadyLoadedException;
-import me.projectx.thunderbolt2.exceptions.FileNotLoadedException;
 import me.projectx.thunderbolt2.models.ThunderFile;
 import me.projectx.thunderbolt2.org.json.JSONObject;
 
@@ -23,15 +21,15 @@ public abstract class FileManager {
 		return fileMap.get(name);
 	}
 	
-	private void create(String name, String path) throws FileAlreadyLoadedException{
+	private void create(String name, String path){
 		if (get(name) == null){
 			fileMap.put(name, new ThunderFile(name, path));
 		}else{
-			throw new FileAlreadyLoadedException("The File " + name + ".json is already loaded!");
+			System.out.println("[Thunderbolt 2] The file '" + name + ".json' is already loaded!");
 		}
 	}
 	
-	public void load(String name, String path) throws FileAlreadyLoadedException{
+	protected void load(String name, String path){
 		if (get(name) == null){
 			try {
 				File f = new File(path + File.separator + name + ".json");
@@ -62,32 +60,32 @@ public abstract class FileManager {
 				e.printStackTrace();
 			}	
 		}else{
-			throw new FileAlreadyLoadedException("The File " + name + ".json is already loaded!");
+			System.out.println("[Thunderbolt 2] The file '" + name + ".json' is already loaded!");
 		}
 	}
 	
-	protected void unload(String name) throws FileNotLoadedException{
+	protected void unload(String name){
 		ThunderFile tf = get(name);
 		if (tf != null){
 			fileMap.remove(tf);
 			tf = null;
 		}else{
-			throw new FileNotLoadedException("The file " + name + ".json isn't loaded and/or doesn't exist.");
+			System.out.println("[Thunderbolt 2] The file '" + name + ".json' isn't loaded and/or doesn't exist.");
 		}
 	}
 	
-	protected void delete(String name) throws FileNotLoadedException{
+	protected void delete(String name){
 		ThunderFile tf = get(name);
 		if (tf != null){
 			try {
-				fileMap.remove(tf);
+				fileMap.remove(name);
 				Files.delete(Paths.get(tf.getPath() + File.separator + name + ".json"));
 				tf = null;
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
 		}else{
-			throw new FileNotLoadedException("The file " + name + ".json isn't loaded and/or doesn't exist.");
+			System.out.println("[Thunderbolt 2] The file '" + name + ".json' isn't loaded and/or doesn't exist.");
 		}
 	}
 }

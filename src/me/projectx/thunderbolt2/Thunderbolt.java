@@ -1,7 +1,5 @@
 package me.projectx.thunderbolt2;
 
-import me.projectx.thunderbolt2.exceptions.FileAlreadyLoadedException;
-import me.projectx.thunderbolt2.exceptions.FileNotLoadedException;
 import me.projectx.thunderbolt2.managers.FileManager;
 import me.projectx.thunderbolt2.models.ThunderFile;
 
@@ -26,9 +24,8 @@ public class Thunderbolt extends FileManager {
 	 * 
 	 * @param name : The name of the file to load.
 	 * @param path : The path to the file.
-	 * @throws FileAlreadyLoadedException 
 	 */
-	public void load(String name, String path) throws FileAlreadyLoadedException{
+	public void load(String name, String path){
 		super.load(name, path);
 	}
 	
@@ -36,9 +33,8 @@ public class Thunderbolt extends FileManager {
 	 * Unload a file from memory
 	 * 
 	 * @param name : The name of the file to unload
-	 * @throws FileNotLoadedException
 	 */
-	public void unload(String name) throws FileNotLoadedException{
+	public void unload(String name){
 		super.unload(name);
 	}
 	
@@ -46,9 +42,8 @@ public class Thunderbolt extends FileManager {
 	 * Delete a file and remove it from memory
 	 * 
 	 * @param name : The name of the file to delete
-	 * @throws FileNotLoadedException 
 	 */
-	public void delete(String name) throws FileNotLoadedException{
+	public void delete(String name){
 		super.delete(name);
 	}
 }
