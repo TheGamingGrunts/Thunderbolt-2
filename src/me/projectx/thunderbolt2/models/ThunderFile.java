@@ -114,7 +114,7 @@ public class ThunderFile implements FileLayout{
     	List<String> list = new ArrayList<String>();
     	for (Object o : temp){
     		if (o instanceof String){
-    			list.add(String.valueOf(o));
+    			list.add(String.valueOf(o).replace("\"", ""));
     		}
     	}
     	return list;
@@ -211,7 +211,6 @@ public class ThunderFile implements FileLayout{
 	
 	public void save(){
 		new Thread(){
-			@SuppressWarnings("unchecked")
 			public void run(){
 				JSONObject obj = new JSONObject();
 				for (Map.Entry<String, Object> entry : map.entrySet()){
@@ -219,7 +218,7 @@ public class ThunderFile implements FileLayout{
 				}
 				try {
 					PrintWriter writer = new PrintWriter(new FileWriter(path + File.separator + name + ".json", false));
-					writer.write(obj.toJSONString());
+					writer.write(obj.toString(2));
 					writer.close();
 				} catch(IOException e) {
 					e.printStackTrace();

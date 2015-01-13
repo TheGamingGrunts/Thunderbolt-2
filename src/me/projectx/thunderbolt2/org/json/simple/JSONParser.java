@@ -273,8 +273,8 @@ public class JSONParser {
 	}
 	
 	private Map createObjectContainer(ContainerFactory containerFactory){
-		if(containerFactory == null)
-			return new JSONObject();
+		/*if(containerFactory == null)
+			return new JSONObject();*/
 		Map m = containerFactory.createObjectContainer();
 		
 		if(m == null)
