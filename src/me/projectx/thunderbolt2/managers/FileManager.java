@@ -14,11 +14,9 @@ import me.projectx.thunderbolt2.exceptions.FileAlreadyLoadedException;
 import me.projectx.thunderbolt2.exceptions.FileNotLoadedException;
 import me.projectx.thunderbolt2.models.ThunderFile;
 import me.projectx.thunderbolt2.org.json.JSONObject;
-import me.projectx.thunderbolt2.org.json.simple.ParseException;
 
 public abstract class FileManager {
 	
-	//private List<ThunderFile> files = new ArrayList<ThunderFile>();
 	private Map<String, ThunderFile> fileMap = new HashMap<String, ThunderFile>();
 	
 	public ThunderFile get(String name){
@@ -45,12 +43,7 @@ public abstract class FileManager {
 						while ((line = br.readLine()) != null){
 							jsonData += line + "\n";
 						}
-						System.out.println(jsonData);
-						try{
-							br.close();
-						}catch(IOException e){
-							e.printStackTrace();
-						}
+						br.close();
 						JSONObject obj = new JSONObject(jsonData);
 						Iterator<?> i = obj.keySet().iterator();
 						ThunderFile tf = new ThunderFile(name, path);
