@@ -63,31 +63,31 @@ public class ThunderFile implements FileLayout{
 	}
 	
 	public byte getByte(String key){
-		return Byte.parseByte(map.get(key).toString());
+		return (Byte)map.get(key);
 	}
 	
 	public short getShort(String key){
-		return Short.parseShort(map.get(key).toString());
+		return (String)map.get(key);
 	}
 	
 	public int getInt(String key){
-		return Integer.parseInt(map.get(key).toString());
+		return (int)map.get(key);
 	}
 	
 	public double getDouble(String key){
-		return Double.parseDouble(map.get(key).toString());
+		return (double)map.get(key);
 	}
 	
 	public long getLong(String key){
-		return Long.parseLong(map.get(key).toString());
+		return (long)map.get(key);
 	}
 	
 	public float getFloat(String key){
-		return Float.parseFloat(map.get(key).toString());
+		return (float)map.get(key);
 	}
 	
 	public boolean getBoolean(String key){
-		return Boolean.parseBoolean(map.get(key).toString());
+		return (boolean)map.get(key);
 	}
     
 	/**
