@@ -1,37 +1,33 @@
 package me.projectx.thunderbolt2.managers;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 
 import me.projectx.thunderbolt2.exceptions.FileAlreadyLoadedException;
 import me.projectx.thunderbolt2.exceptions.FileNotLoadedException;
 import me.projectx.thunderbolt2.models.ThunderFile;
 import me.projectx.thunderbolt2.org.json.JSONObject;
-import me.projectx.thunderbolt2.org.json.simple.JSONParser;
 import me.projectx.thunderbolt2.org.json.simple.ParseException;
 
 public abstract class FileManager {
 	
-	private List<ThunderFile> files = new ArrayList<ThunderFile>();
+	//private List<ThunderFile> files = new ArrayList<ThunderFile>();
+	private Map<String, ThunderFile> fileMap = new HashMap<String, ThunderFile>();
 	
 	public ThunderFile get(String name){
-		for (ThunderFile tf : files){
-			if (tf.getName().equals(name)){
-				return tf;
-			}
-		}
-		return null;
+		return fileMap.get(name);
 	}
 	
 	private void create(String name, String path) throws FileAlreadyLoadedException{
 		if (get(name) == null){
-			files.add(new ThunderFile(name, path));
+			fileMap.put(name, new ThunderFile(name, path));
 		}else{
 			throw new FileAlreadyLoadedException("The File " + name + ".json is already loaded!");
 		}
@@ -43,21 +39,33 @@ public abstract class FileManager {
 				File f = new File(path + File.separator + name + ".json");
 				if (f.exists()){
 					if (f.length() != 0){
-						JSONObject jobj = (JSONObject)new JSONParser().parse(new FileReader(f));
+						BufferedReader br = new BufferedReader(new FileReader(f));
+						String line;
+						String jsonData = "";
+						while ((line = br.readLine()) != null){
+							jsonData += line + "\n";
+						}
+						System.out.println(jsonData);
+						try{
+							br.close();
+						}catch(IOException e){
+							e.printStackTrace();
+						}
+						JSONObject obj = new JSONObject(jsonData);
+						Iterator<?> i = obj.keySet().iterator();
 						ThunderFile tf = new ThunderFile(name, path);
-						Iterator<?> i = jobj.keySet().iterator();
-						while(i.hasNext()){
+						while (i.hasNext()){
 							String key = (String) i.next();
-							Object value = jobj.get(key);
+							Object value = obj.get(key);
 							tf.set(key, value);
 						}
-						files.add(tf);
+						fileMap.put(name, tf);
 						System.out.println("[Thunderbolt 2] Loaded " + tf.getName() + ".json");	
 					}
 				}else{
 					create(name, path);
 				}
-			} catch(IOException | ParseException e) {
+			} catch(IOException e) {
 				e.printStackTrace();
 			}	
 		}else{
@@ -68,7 +76,7 @@ public abstract class FileManager {
 	protected void unload(String name) throws FileNotLoadedException{
 		ThunderFile tf = get(name);
 		if (tf != null){
-			files.remove(tf);
+			fileMap.remove(tf);
 			tf = null;
 		}else{
 			throw new FileNotLoadedException("The file " + name + ".json isn't loaded and/or doesn't exist.");
@@ -79,7 +87,7 @@ public abstract class FileManager {
 		ThunderFile tf = get(name);
 		if (tf != null){
 			try {
-				files.remove(tf);
+				fileMap.remove(tf);
 				Files.delete(Paths.get(tf.getPath() + File.separator + name + ".json"));
 				tf = null;
 			} catch(IOException e) {
