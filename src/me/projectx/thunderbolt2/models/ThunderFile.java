@@ -63,11 +63,11 @@ public class ThunderFile implements FileLayout{
 	}
 	
 	public byte getByte(String key){
-		return (Byte)map.get(key);
+		return (byte)map.get(key);
 	}
 	
 	public short getShort(String key){
-		return (String)map.get(key);
+		return (short)map.get(key);
 	}
 	
 	public int getInt(String key){
