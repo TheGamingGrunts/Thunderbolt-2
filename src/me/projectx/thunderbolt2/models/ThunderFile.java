@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.projectx.thunderbolt2.interfaces.FileLayout;
+import me.projectx.thunderbolt2.org.json.JSONArray;
 import me.projectx.thunderbolt2.org.json.JSONObject;
 
 /**
@@ -106,7 +107,12 @@ public class ThunderFile implements FileLayout{
 	 */
     private List<?> getList(String key) {
         Object o = map.get(key);
-        return getList(path, (o instanceof List) ? (List<?>) o : null);
+        List<Object> l = new ArrayList<Object>();
+        JSONArray ja = new JSONArray(o.toString());
+        for (int i = 0; i < ja.length(); i++){
+        	l.add(ja.get(i));
+        }
+        return getList(path, (o instanceof List) ? (List<?>) o : l);
     }
     
     public List<String> getStringList(String key){
