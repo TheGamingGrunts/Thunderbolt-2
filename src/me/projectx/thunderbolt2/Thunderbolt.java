@@ -11,7 +11,7 @@ import me.projectx.thunderbolt2.models.ThunderFile;
 public class Thunderbolt extends FileManager {
 	
 	/**
-	 * Get a file by its name. Doesn't require .json extension
+	 * Get a file by its name. Doesn't require .json extension. This method is thread-safe
 	 * 
 	 * @param name : The name of the file to get.
 	 */
@@ -20,7 +20,7 @@ public class Thunderbolt extends FileManager {
 	}
 	
 	/**
-	 * Load a file into memory.
+	 * Load a file into memory. This method is thread-safe
 	 * 
 	 * @param name : The name of the file to load.
 	 * @param path : The path to the file.
@@ -30,7 +30,7 @@ public class Thunderbolt extends FileManager {
 	}
 	
 	/**
-	 * Unload a file from memory
+	 * Unload a file from memory. This method is thread-safe
 	 * 
 	 * @param name : The name of the file to unload
 	 */
@@ -39,7 +39,7 @@ public class Thunderbolt extends FileManager {
 	}
 	
 	/**
-	 * Delete a file and remove it from memory
+	 * Delete a file and remove it from memory. This method is thread-safe
 	 * 
 	 * @param name : The name of the file to delete
 	 */

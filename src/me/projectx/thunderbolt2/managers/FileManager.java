@@ -17,11 +17,11 @@ public abstract class FileManager {
 	
 	private Map<String, ThunderFile> fileMap = new HashMap<String, ThunderFile>();
 	
-	public ThunderFile get(String name){
+	public synchronized ThunderFile get(String name){
 		return fileMap.get(name);
 	}
 	
-	private void create(String name, String path){
+	private synchronized void create(String name, String path){
 		if (get(name) == null){
 			fileMap.put(name, new ThunderFile(name, path));
 		}else{
@@ -29,7 +29,7 @@ public abstract class FileManager {
 		}
 	}
 	
-	protected void load(String name, String path){
+	protected synchronized void load(String name, String path){
 		if (get(name) == null){
 			try {
 				File f = new File(path + File.separator + name + ".json");
@@ -64,7 +64,7 @@ public abstract class FileManager {
 		}
 	}
 	
-	protected void unload(String name){
+	protected synchronized void unload(String name){
 		ThunderFile tf = get(name);
 		if (tf != null){
 			fileMap.remove(tf);
@@ -74,7 +74,7 @@ public abstract class FileManager {
 		}
 	}
 	
-	protected void delete(String name){
+	protected synchronized void delete(String name){
 		ThunderFile tf = get(name);
 		if (tf != null){
 			try {
