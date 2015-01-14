@@ -28,12 +28,12 @@ public class Example extends Thunderbolt {
 
 Afterwards, all you have to do is call one of the following methods
 
-| Method | Explanation | Throws |
-|--------|-------------|--------|
-| get(String name) | Get a file by its name. Doesn't require .json extension. Returns a ThunderFile object representation. | N/A |
-| load(String name, String path) | Load a specific file into memory. If the file doesn't exist, this will create it at the specified path. Doesn't require .json extention. | FileAlreadyLoadedException |
-| unload(String name) | Unload a file from memory | FileNotLoadedException |
-| delete(String name) | Delete a file and remove it from memory | FileNotLoadedException |
+| Method | Explanation |
+|--------|-------------|
+| get(String name) | Get a file by its name. Doesn't require .json extension. Returns a ThunderFile object representation. |
+| load(String name, String path) | Load a specific file into memory. If the file doesn't exist, this will create it at the specified path. Doesn't require .json extention. |
+| unload(String name) | Unload a file from memory |
+| delete(String name) | Delete a file and remove it from memory |
 
 That's basically it in terms of file manipulation. Now, there are numerous options within the file wrapper class, ThunderFile, that you can use as well. Here are all of the things that you can do:
 
@@ -69,18 +69,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.projectx.thunderbolt2.Thunderbolt;
-import me.projectx.thunderbolt2.exceptions.FileAlreadyLoadedException;
 import me.projectx.thunderbolt2.models.ThunderFile;
 
 public class Example { 
 	
 	public static void main(String[] args){
 		Thunderbolt t = new Thunderbolt(); //You can also just extend Thunderbolt instead of doing this
-		try {
-			t.load("test", "C:/Users/Daniel/Desktop");
-		} catch(FileAlreadyLoadedException e) {
-			e.printStackTrace();
-		}
+		t.load("test", "C:/Users/Daniel/Desktop");
+		
 		ThunderFile tf = t.get("test");
 		List<String> l = new ArrayList<String>();
 		l.add("String 1");
