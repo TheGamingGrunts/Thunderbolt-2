@@ -29,7 +29,7 @@ public abstract class FileManager {
 		}
 	}
 	
-	protected synchronized void load(String name, String path){
+	protected synchronized ThunderFile load(String name, String path){
 		if (get(name) == null){
 			try {
 				File f = new File(path + File.separator + name + ".json");
@@ -52,9 +52,11 @@ public abstract class FileManager {
 						}
 						fileMap.put(name, tf);
 						System.out.println("[Thunderbolt 2] Loaded " + tf.getName() + ".json");	
+						return tf;
 					}
 				}else{
 					create(name, path);
+					return get(name);
 				}
 			} catch(IOException e) {
 				e.printStackTrace();
@@ -62,6 +64,7 @@ public abstract class FileManager {
 		}else{
 			System.out.println("[Thunderbolt 2] The file '" + name + ".json' is already loaded!");
 		}
+		return null;
 	}
 	
 	protected synchronized void unload(String name){

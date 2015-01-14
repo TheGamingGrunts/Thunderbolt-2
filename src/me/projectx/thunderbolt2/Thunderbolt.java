@@ -25,8 +25,8 @@ public class Thunderbolt extends FileManager {
 	 * @param name : The name of the file to load.
 	 * @param path : The path to the file.
 	 */
-	public void load(String name, String path){
-		super.load(name, path);
+	public ThunderFile load(String name, String path){
+		return super.load(name, path);
 	}
 	
 	/**
