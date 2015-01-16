@@ -1,5 +1,6 @@
 package me.projectx.thunderbolt2.interfaces;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface FileLayout {
@@ -156,6 +157,7 @@ public interface FileLayout {
 	
 	/**
 	 * Save this file to disk
+	 * @throws IOException 
 	 */
-	public void save();
+	public void save() throws IOException;
 }

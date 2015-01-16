@@ -1,5 +1,7 @@
 package me.projectx.thunderbolt2;
 
+import java.io.IOException;
+
 import me.projectx.thunderbolt2.managers.FileManager;
 import me.projectx.thunderbolt2.models.ThunderFile;
 
@@ -21,11 +23,15 @@ public class Thunderbolt extends FileManager {
 	
 	/**
 	 * Load a file into memory. This method is thread-safe
+	 * <p>
+	 * NOTE: Make sure to call {@link Thunderbolt#unload(String)} when you're done using this file,
+	 * otherwise a memory leak may occur!
 	 * 
 	 * @param name : The name of the file to load.
 	 * @param path : The path to the file.
+	 * @throws IOException 
 	 */
-	public ThunderFile load(String name, String path){
+	public ThunderFile load(String name, String path) throws IOException{
 		return super.load(name, path);
 	}
 	
@@ -33,8 +39,9 @@ public class Thunderbolt extends FileManager {
 	 * Unload a file from memory. This method is thread-safe
 	 * 
 	 * @param name : The name of the file to unload
+	 * @throws IllegalArgumentException
 	 */
-	public void unload(String name){
+	public void unload(String name) throws IllegalArgumentException{
 		super.unload(name);
 	}
 	
@@ -42,8 +49,9 @@ public class Thunderbolt extends FileManager {
 	 * Delete a file and remove it from memory. This method is thread-safe
 	 * 
 	 * @param name : The name of the file to delete
+	 * @throws IOException 
 	 */
-	public void delete(String name){
+	public void delete(String name) throws IOException{
 		super.delete(name);
 	}
 }
