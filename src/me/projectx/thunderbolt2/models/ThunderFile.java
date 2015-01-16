@@ -102,7 +102,8 @@ public class ThunderFile implements FileLayout{
 	}
 	
 	/**
-	 * Courtesy of the Bukkit Project 
+	 * Modified from the Bukkit Project 
+	 * 
 	 * {@link https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/configuration/MemorySection.java#L360}
 	 */
     private List<?> getList(String key) {
@@ -120,7 +121,7 @@ public class ThunderFile implements FileLayout{
     	List<String> list = new ArrayList<String>();
     	for (Object o : temp){
     		if (o instanceof String){
-    			list.add(String.valueOf(o).replace("\"", ""));
+    			list.add(String.valueOf(o));
     		}
     	}
     	return list;
@@ -215,7 +216,7 @@ public class ThunderFile implements FileLayout{
     	return newMap;
     }*/
 	
-	public void save(){
+	public void save() throws IOException{
 		new Thread(){
 			public void run(){
 				JSONObject obj = new JSONObject();
@@ -226,10 +227,7 @@ public class ThunderFile implements FileLayout{
 					PrintWriter writer = new PrintWriter(new FileWriter(path + File.separator + name + ".json", false));
 					writer.write(obj.toString(2));
 					writer.close();
-				} catch(IOException e) {
-					e.printStackTrace();
-				}
-				this.interrupt();
+				} catch(IOException e) {}
 			}
 		}.start();
 	}
