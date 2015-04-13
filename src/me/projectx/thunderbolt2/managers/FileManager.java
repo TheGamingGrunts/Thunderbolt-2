@@ -10,10 +10,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import me.projectx.thunderbolt2.Thunderbolt;
 import me.projectx.thunderbolt2.models.ThunderFile;
 import me.projectx.thunderbolt2.org.json.JSONObject;
 
-public abstract class FileManager {
+public class FileManager implements Thunderbolt {
 	
 	private volatile Map<String, ThunderFile> fileMap = new HashMap<String, ThunderFile>();
 	
@@ -31,7 +32,7 @@ public abstract class FileManager {
 		}
 	}
 	
-	protected synchronized ThunderFile load(String name, String path) throws IOException{
+	public ThunderFile load(String name, String path) throws IOException{
 		if (fileMap.get(name) == null){
 			File f = new File(path + File.separator + name + ".json");
 			if (f.exists()){
@@ -63,7 +64,7 @@ public abstract class FileManager {
 		return null;
 	}
 	
-	protected synchronized void unload(final String name) throws IllegalArgumentException{
+	public void unload(final String name) throws IllegalArgumentException{
 		new Thread(){
 			public void run(){
 				ThunderFile tf = fileMap.get(name);
@@ -77,7 +78,7 @@ public abstract class FileManager {
 		}.start();
 	}
 	
-	protected synchronized void delete(final String name) throws IOException{
+	public void delete(final String name) throws IOException{
 		new Thread(){
 			public void run(){
 				ThunderFile tf = fileMap.get(name);

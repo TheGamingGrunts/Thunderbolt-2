@@ -6,20 +6,19 @@ import me.projectx.thunderbolt2.managers.FileManager;
 import me.projectx.thunderbolt2.models.ThunderFile;
 
 /**
- * The main class of Thunderbolt containing key accessor methods
+ * An interface specifying available methods for developers
  * 
  * @author Daniel S. (The Gaming Grunts)
  */
-public class Thunderbolt extends FileManager {
+public interface Thunderbolt {
 	
 	/**
 	 * Get a file by its name. Doesn't require .json extension. This method is thread-safe
 	 * 
 	 * @param name : The name of the file to get.
 	 */
-	public ThunderFile get(String name){
-		return super.get(name);
-	}
+	public ThunderFile get(String name);
+	
 	
 	/**
 	 * Load a file into memory. This method is thread-safe
@@ -31,9 +30,8 @@ public class Thunderbolt extends FileManager {
 	 * @param path : The path to the file.
 	 * @throws IOException 
 	 */
-	public ThunderFile load(String name, String path) throws IOException{
-		return super.load(name, path);
-	}
+	public ThunderFile load(String name, String path) throws IOException;
+	
 	
 	/**
 	 * Unload a file from memory. This method is thread-safe
@@ -41,9 +39,7 @@ public class Thunderbolt extends FileManager {
 	 * @param name : The name of the file to unload
 	 * @throws IllegalArgumentException
 	 */
-	public void unload(String name) throws IllegalArgumentException{
-		super.unload(name);
-	}
+	public void unload(String name) throws IllegalArgumentException;
 	
 	/**
 	 * Delete a file and remove it from memory. This method is thread-safe
@@ -51,7 +47,5 @@ public class Thunderbolt extends FileManager {
 	 * @param name : The name of the file to delete
 	 * @throws IOException 
 	 */
-	public void delete(String name) throws IOException{
-		super.delete(name);
-	}
+	public void delete(String name) throws IOException;
 }
