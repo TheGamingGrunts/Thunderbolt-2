@@ -15,13 +15,13 @@ import me.projectx.thunderbolt2.org.json.JSONObject;
 
 public abstract class FileManager {
 	
-	private Map<String, ThunderFile> fileMap = new HashMap<String, ThunderFile>();
+	private volatile Map<String, ThunderFile> fileMap = new HashMap<String, ThunderFile>();
 	
 	public ThunderFile get(String name){
 		return fileMap.get(name);
 	}
 	
-	private synchronized ThunderFile create(final String name, final String path){
+	private ThunderFile create(final String name, final String path){
 		if (fileMap.get(name) == null){
 			ThunderFile tf = new ThunderFile(name, path);
 			fileMap.put(name, tf);
@@ -86,7 +86,9 @@ public abstract class FileManager {
 						fileMap.remove(name);
 						Files.delete(Paths.get(tf.getPath() + File.separator + name + ".json"));
 						tf = null;
-					} catch(IOException e) {}
+					} catch(IOException e) {
+						e.printStackTrace();
+					}
 				}else{
 					throw new IllegalArgumentException("[Thunderbolt 2] The file '" + name + ".json' isn't loaded and/or doesn't exist.");
 				}
