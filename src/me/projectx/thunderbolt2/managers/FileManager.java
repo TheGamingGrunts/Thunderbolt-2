@@ -36,7 +36,7 @@ public class FileManager implements Thunderbolt {
 		if (fileMap.get(name) == null){
 			File f = new File(path + File.separator + name + ".json");
 			if (f.exists()){
-				ThunderFile tf = new ThunderFile(name, path);
+				ThunderFile tf = null;
 				if (f.length() != 0){
 					BufferedReader br = new BufferedReader(new FileReader(f));
 					String line;
@@ -45,7 +45,8 @@ public class FileManager implements Thunderbolt {
 						jsonData += line + "\n";
 					}
 					br.close();
-					JSONObject obj = new JSONObject(jsonData);
+					tf = new ThunderFile(name, path, jsonData);
+					JSONObject obj = tf.getJSONObject();
 					Iterator<?> i = obj.keySet().iterator();
 					while (i.hasNext()){
 						String key = (String) i.next();

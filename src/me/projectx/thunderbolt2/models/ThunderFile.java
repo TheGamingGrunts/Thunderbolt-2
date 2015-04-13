@@ -20,7 +20,7 @@ import me.projectx.thunderbolt2.org.json.JSONObject;
 public class ThunderFile implements FileLayout{
 	
 	private String name, path;
-	private JSONObject jo = new JSONObject();
+	private JSONObject jo;
 	
 	/**
 	 * @see ThunderFile 
@@ -30,6 +30,7 @@ public class ThunderFile implements FileLayout{
 	public ThunderFile(String name, String path){
 		this.name = name;
 		this.path = path;
+		jo = new JSONObject();
 		File f = new File(path + File.separator + name + ".json");
 		if (!f.exists()){
 			try {
@@ -39,6 +40,11 @@ public class ThunderFile implements FileLayout{
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public ThunderFile(String name, String path, String jsonData){
+		this(name, path);
+		jo = new JSONObject(jsonData);
 	}
 	
 	public String getName(){
@@ -215,5 +221,9 @@ public class ThunderFile implements FileLayout{
 				}
 			}
 		}.start();
+	}
+	
+	public JSONObject getJSONObject(){
+		return jo;
 	}
 }
