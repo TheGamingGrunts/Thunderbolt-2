@@ -14,7 +14,7 @@ import me.projectx.thunderbolt2.Thunderbolt;
 import me.projectx.thunderbolt2.models.ThunderFile;
 import me.projectx.thunderbolt2.org.json.JSONObject;
 
-public class FileManager implements Thunderbolt {
+public class ThunderboltManager implements Thunderbolt {
 	
 	private volatile Map<String, ThunderFile> fileMap = new HashMap<String, ThunderFile>();
 	
@@ -52,8 +52,7 @@ public class FileManager implements Thunderbolt {
 						String key = (String) i.next();
 						tf.set(key, obj.get(key));
 					}
-					return tf;
-				}
+				} 
 				fileMap.put(name, tf);
 				return tf;
 			}else{

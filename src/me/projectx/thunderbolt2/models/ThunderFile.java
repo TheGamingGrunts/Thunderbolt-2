@@ -20,7 +20,7 @@ import me.projectx.thunderbolt2.org.json.JSONObject;
 public class ThunderFile implements FileLayout{
 	
 	private String name, path;
-	private JSONObject jo;
+	private volatile JSONObject jo;
 	
 	/**
 	 * @see ThunderFile 
@@ -42,6 +42,12 @@ public class ThunderFile implements FileLayout{
 		}
 	}
 	
+	/**
+	 * @see ThunderFile
+	 * @param name : The name of the file, excluding the .json extension.
+	 * @param path : The path to the file
+	 * @param jsonData : JSON-formatted data
+	 */
 	public ThunderFile(String name, String path, String jsonData){
 		this(name, path);
 		jo = new JSONObject(jsonData);
