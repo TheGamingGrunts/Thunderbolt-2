@@ -53,15 +53,15 @@ public class ThunderboltManager implements Thunderbolt {
 						tf.set(key, obj.get(key));
 					}
 				} 
+				tf = (tf != null) ? tf : new ThunderFile(name, path);
 				fileMap.put(name, tf);
 				return tf;
 			}else{
-				create(name, path);
+				return this.create(name, path);
 			}
 		}else{
 			throw new IllegalArgumentException("[Thunderbolt 2] The file '" + name + ".json' is already loaded!");
 		}
-		return null;
 	}
 	
 	public void unload(final String name) throws IllegalArgumentException{
