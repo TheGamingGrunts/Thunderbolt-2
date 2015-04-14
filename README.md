@@ -15,15 +15,15 @@
 The Thunderbolt syntax is extremely simple and easy to use. All you have to do is instantiate the Thunderbolt class.
 
 ```java
-Thunderbolt t = new Thunderbolt();
+Thunderbolt t = new ThunderboltManager();
 ```
 
 OR
 
-You can simply extend the Thunderbolt class:
+You can simply extend the ThunderboltManager class:
 
 ```java
-public class Example extends Thunderbolt {
+public class Example extends ThunderboltManager {
 ```
 
 Afterwards, all you have to do is call one of the following methods
@@ -74,10 +74,9 @@ import me.projectx.thunderbolt2.models.ThunderFile;
 public class Example { 
 	
 	public static void main(String[] args){
-		Thunderbolt t = new Thunderbolt(); //You can also just extend Thunderbolt instead of doing this
-		t.load("test", "C:/Users/Daniel/Desktop");
+		Thunderbolt t = new ThunderboltManager(); //You can also just extend Thunderbolt instead of doing this
 		
-		ThunderFile tf = t.get("test");
+		ThunderFile tf = t.load("test", "C:/Users/Daniel/Desktop");
 		List<String> l = new ArrayList<String>();
 		l.add("String 1");
 		l.add("String 2");
