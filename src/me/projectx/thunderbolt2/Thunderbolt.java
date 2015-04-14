@@ -2,6 +2,7 @@ package me.projectx.thunderbolt2;
 
 import java.io.IOException;
 
+import me.projectx.thunderbolt2.exceptions.FileLoadException;
 import me.projectx.thunderbolt2.models.ThunderFile;
 
 /**
@@ -28,8 +29,9 @@ public interface Thunderbolt {
 	 * @param name : The name of the file to load.
 	 * @param path : The path to the file.
 	 * @throws IOException 
+	 * @throws FileLoadException 
 	 */
-	public ThunderFile load(String name, String path) throws IOException;
+	public ThunderFile load(String name, String path) throws IOException, FileLoadException;
 	
 	
 	/**

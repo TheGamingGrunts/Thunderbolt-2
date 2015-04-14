@@ -2,6 +2,7 @@ package me.projectx.thunderbolt2.managers;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,6 +12,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import me.projectx.thunderbolt2.Thunderbolt;
+import me.projectx.thunderbolt2.exceptions.FileLoadException;
 import me.projectx.thunderbolt2.models.ThunderFile;
 import me.projectx.thunderbolt2.org.json.JSONObject;
 
@@ -22,17 +24,17 @@ public class ThunderboltManager implements Thunderbolt {
 		return fileMap.get(name);
 	}
 	
-	private ThunderFile create(final String name, final String path){
+	private ThunderFile create(final String name, final String path) throws FileLoadException{
 		if (fileMap.get(name) == null){
 			ThunderFile tf = new ThunderFile(name, path);
 			fileMap.put(name, tf);
 			return tf;
 		}else{
-			throw new IllegalArgumentException("[Thunderbolt 2] The file '" + name + ".json' is already loaded!");
+			throw new FileLoadException(name);
 		}
 	}
 	
-	public ThunderFile load(String name, String path) throws IOException{
+	public ThunderFile load(String name, String path) throws FileLoadException, IOException{
 		if (fileMap.get(name) == null){
 			File f = new File(path + File.separator + name + ".json");
 			if (f.exists()){
@@ -60,11 +62,11 @@ public class ThunderboltManager implements Thunderbolt {
 				return this.create(name, path);
 			}
 		}else{
-			throw new IllegalArgumentException("[Thunderbolt 2] The file '" + name + ".json' is already loaded!");
+			throw new FileLoadException(name);
 		}
 	}
 	
-	public void unload(final String name) throws IllegalArgumentException{
+	public void unload(final String name){
 		new Thread(){
 			public void run(){
 				ThunderFile tf = fileMap.get(name);
@@ -72,26 +74,30 @@ public class ThunderboltManager implements Thunderbolt {
 					fileMap.remove(tf);
 					tf = null;
 				}else{
-					throw new IllegalArgumentException("[Thunderbolt 2] The file '" + name + ".json' isn't loaded and/or doesn't exist.");
+					try {
+						throw new FileNotFoundException("[Thunderbolt 2] The file '" + name + ".json' isn't loaded and/or doesn't exist.");
+					} catch(FileNotFoundException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}.start();
 	}
 	
-	public void delete(final String name) throws IOException{
+	public void delete(final String name){
 		new Thread(){
 			public void run(){
 				ThunderFile tf = fileMap.get(name);
-				if (tf != null){
-					try {
+				try{
+					if (tf != null){
 						fileMap.remove(name);
 						Files.delete(Paths.get(tf.getPath() + File.separator + name + ".json"));
 						tf = null;
-					} catch(IOException e) {
-						e.printStackTrace();
+					}else{
+						throw new FileNotFoundException("[Thunderbolt 2] The file '" + name + ".json' isn't loaded and/or doesn't exist.");
 					}
-				}else{
-					throw new IllegalArgumentException("[Thunderbolt 2] The file '" + name + ".json' isn't loaded and/or doesn't exist.");
+				} catch(IOException e){
+					e.printStackTrace();
 				}
 			}
 		}.start();
