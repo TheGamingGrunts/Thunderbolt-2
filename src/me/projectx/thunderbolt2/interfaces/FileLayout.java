@@ -2,6 +2,7 @@ package me.projectx.thunderbolt2.interfaces;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 public interface FileLayout {
 	
@@ -160,4 +161,18 @@ public interface FileLayout {
 	 * @throws IOException 
 	 */
 	public void save() throws IOException;
+	
+	/**
+	 * Get a Set containing all the keys in the map
+	 * 
+	 * @return A Set containing all keys
+	 */
+	public Set<String> keySet();
+	
+	/**
+	 * Get a Set containing all the values in the map
+	 * 
+	 * @return A Set containing all the value
+	 */
+	public Set<Object> valueSet();
 }

@@ -5,7 +5,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import me.projectx.thunderbolt2.interfaces.FileLayout;
 import me.projectx.thunderbolt2.org.json.JSONArray;
@@ -19,7 +22,7 @@ import me.projectx.thunderbolt2.org.json.JSONObject;
  */
 public class ThunderFile implements FileLayout{
 	
-	private String name, path;
+	private final String name, path;
 	private volatile JSONObject jo;
 	
 	/**
@@ -231,5 +234,18 @@ public class ThunderFile implements FileLayout{
 	
 	public JSONObject getJSONObject(){
 		return jo;
+	}
+	
+	public Set<String> keySet(){
+		return jo.keySet();
+	}
+	
+	public Set<Object> valueSet(){
+		Set<Object> set = new HashSet<Object>();
+		Iterator<String> i = jo.keys();
+		while (i.hasNext()){
+			set.add(jo.get(i.next()));
+		}
+		return set;
 	}
 }
