@@ -3,7 +3,7 @@
 
 <p>Want an easy and fast way to store your data? Well, look no further! Thunderbolt is a Java file library designed from the ground-up to be as fast as possible, in addition to using a JSON (JavaScript Object Notation) backend for file storage. </p>
 
-[Jar Download](https://dl.project-x.me/files/Thunderbolt2.jar)
+[Jar Download](https://dl.project-x.me/files/Thunderbolt.jar)
 
 ##Table of Contents
 - [JavaDocs] (https://docs.project-x.me/thunderbolt)
@@ -41,7 +41,7 @@ That's basically it in terms of file manipulation. Now, there are numerous optio
 |--------|-------------|
 | getName() | Get the name of the file |
 | getPath() | Get the path to the file |
-| set(String key, String value) | Set an object with a given key, like a Map |
+| set(String key, Object value) | Set an object with a given key, like a Map |
 | get(String key) | Get an object from the map with the specified key |
 | getString(String key) | Get a string from the map with the specified key |
 | getByte(String key) | Get a byte from the map with a specified key |
