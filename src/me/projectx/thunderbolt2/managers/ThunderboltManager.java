@@ -69,10 +69,8 @@ public class ThunderboltManager implements Thunderbolt {
 	public void unload(final String name){
 		new Thread(){
 			public void run(){
-				ThunderFile tf = fileMap.get(name);
-				if (tf != null){
-					fileMap.remove(tf);
-					tf = null;
+				if (fileMap.containsKey(name)){
+					fileMap.remove(name);
 				}else{
 					try {
 						throw new FileNotFoundException("[Thunderbolt 2] The file '" + name + ".json' isn't loaded and/or doesn't exist.");
@@ -87,11 +85,11 @@ public class ThunderboltManager implements Thunderbolt {
 	public void delete(final String name){
 		new Thread(){
 			public void run(){
-				ThunderFile tf = fileMap.get(name);
 				try{
-					if (tf != null){
-						fileMap.remove(name);
+					if (fileMap.containsKey(name)){
+						ThunderFile tf = fileMap.get(name);
 						Files.delete(Paths.get(tf.getPath() + File.separator + name + ".json"));
+						fileMap.remove(name);
 						tf = null;
 					}else{
 						throw new FileNotFoundException("[Thunderbolt 2] The file '" + name + ".json' isn't loaded and/or doesn't exist.");
