@@ -15,17 +15,19 @@ import me.projectx.thunderbolt2.Thunderbolt;
 import me.projectx.thunderbolt2.exceptions.FileLoadException;
 import me.projectx.thunderbolt2.models.ThunderFile;
 import me.projectx.thunderbolt2.org.json.JSONObject;
+import me.projectx.thunderbolt2.utils.Validator;
 
 public class ThunderboltManager implements Thunderbolt {
 	
 	private volatile Map<String, ThunderFile> fileMap = new HashMap<String, ThunderFile>();
 	
 	public ThunderFile get(String name){
-		return fileMap.get(name);
+		return fileMap.get(Validator.checkName(name));
 	}
 	
-	private ThunderFile create(final String name, final String path) throws FileLoadException{
+	private ThunderFile create(String name, String path) throws FileLoadException{
 		synchronized(fileMap){
+			name = Validator.checkName(name);
 			if (fileMap.get(name) == null){
 				ThunderFile tf = new ThunderFile(name, path);
 				fileMap.put(name, tf);
@@ -38,6 +40,7 @@ public class ThunderboltManager implements Thunderbolt {
 	
 	public ThunderFile load(String name, String path) throws FileLoadException, IOException{
 		synchronized(fileMap){
+			name = Validator.checkName(name);
 			if (fileMap.get(name) == null){
 				File f = new File(path + File.separator + name + ".json");
 				if (f.exists()){
@@ -57,7 +60,7 @@ public class ThunderboltManager implements Thunderbolt {
 							String key = (String) i.next();
 							tf.set(key, obj.get(key));
 						}
-					} 
+					}
 					tf = (tf != null) ? tf : new ThunderFile(name, path);
 					fileMap.put(name, tf);
 					return tf;
@@ -70,45 +73,40 @@ public class ThunderboltManager implements Thunderbolt {
 		}
 	}
 	
-	public void unload(final String name){
+	public void unload(String name){
 		synchronized(fileMap){
-			new Thread(){
-				public void run(){
-					if (fileMap.containsKey(name)){
-						fileMap.remove(name);
-					}else{
-						try {
-							throw new FileNotFoundException("[Thunderbolt 2] The file '" + name + ".json' isn't loaded and/or doesn't exist.");
-						} catch(FileNotFoundException e) {
-							e.printStackTrace();
-						}
-					}
+			name = Validator.checkName(name);
+			if (fileMap.containsKey(name)){
+				fileMap.remove(name);
+			}else{
+				try {
+					throw new FileNotFoundException("[Thunderbolt 2] The file '" + name + ".json' isn't loaded and/or doesn't exist.");
+				} catch(FileNotFoundException e) {
+					e.printStackTrace();
 				}
-			}.start();
+			}
 		}
 	}
 	
-	public void delete(final String name){
+	public void delete(String name){
 		synchronized(fileMap){
-			new Thread(){
-				public void run(){
-					try{
-						ThunderFile tf = fileMap.get(name);
-						if (tf != null){			
-							fileMap.remove(name);
-						}else{
-							throw new FileNotFoundException("[Thunderbolt 2] The file '" + name + ".json' isn't loaded and/or doesn't exist.");
-						}
-						delete(name, tf.getPath());
-					} catch(IOException e){
-						e.printStackTrace();
-					}
+			try{
+				name = Validator.checkName(name);
+				ThunderFile tf = fileMap.get(name);
+				if (tf != null){			
+					fileMap.remove(name);
+				}else{
+					throw new FileNotFoundException("[Thunderbolt 2] The file '" + name + ".json' isn't loaded and/or doesn't exist.");
 				}
-			}.start();
+				this.delete(name, tf.getPath());
+			} catch(IOException e){
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	public void delete(String name, String path){
+		name = Validator.checkName(name);
 		if (!fileMap.containsKey(name)){
 			try{
 				Files.delete(Paths.get(path + File.separator + name + ".json"));

@@ -13,6 +13,7 @@ import java.util.Set;
 import me.projectx.thunderbolt2.interfaces.FileLayout;
 import me.projectx.thunderbolt2.org.json.JSONArray;
 import me.projectx.thunderbolt2.org.json.JSONObject;
+import me.projectx.thunderbolt2.utils.Validator;
 
 /**
  * File class containing numerous useful methods for 
@@ -23,7 +24,7 @@ import me.projectx.thunderbolt2.org.json.JSONObject;
 public class ThunderFile implements FileLayout{
 	
 	private final String name, path;
-	private volatile JSONObject jo;
+	private volatile JSONObject jo = new JSONObject();
 	
 	/**
 	 * @see ThunderFile 
@@ -31,9 +32,8 @@ public class ThunderFile implements FileLayout{
 	 * @param path : The path to the file
 	 */
 	public ThunderFile(String name, String path){
-		this.name = name;
 		this.path = path;
-		jo = new JSONObject();
+		this.name = Validator.checkName(name);
 		File f = new File(path + File.separator + name + ".json");
 		if (!f.exists()){
 			try {
