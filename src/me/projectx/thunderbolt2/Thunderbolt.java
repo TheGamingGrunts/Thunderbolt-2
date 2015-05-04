@@ -49,4 +49,13 @@ public interface Thunderbolt {
 	 * @throws IOException 
 	 */
 	public void delete(String name) throws IOException;
+	
+	/**
+	 * Delete a file on disk. 
+	 * 
+	 * @param name : The name of the file
+	 * @param path : The path to the file
+	 * @deprecated May be removed in the future in favor of a better technique
+	 */
+	public void delete(String name, String path);
 }
