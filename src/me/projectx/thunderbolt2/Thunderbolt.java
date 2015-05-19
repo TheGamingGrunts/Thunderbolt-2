@@ -1,9 +1,9 @@
 package me.projectx.thunderbolt2;
 
-import java.io.IOException;
-
 import me.projectx.thunderbolt2.exceptions.FileLoadException;
 import me.projectx.thunderbolt2.models.ThunderFile;
+
+import java.io.IOException;
 
 /**
  * An interface specifying available methods for developers
@@ -14,12 +14,13 @@ public interface Thunderbolt {
 	
 	/**
 	 * Get a file by its name. Doesn't require .json extension. This method is thread-safe
-	 * 
+	 *
+     * <p>This method returns null if the file is not loaded</p>
+     *
 	 * @param name : The name of the file to get.
 	 */
 	public ThunderFile get(String name);
-	
-	
+
 	/**
 	 * Load a file into memory. 
 	 * <p>
@@ -32,7 +33,6 @@ public interface Thunderbolt {
 	 * @throws FileLoadException 
 	 */
 	public ThunderFile load(String name, String path) throws IOException, FileLoadException;
-	
 	
 	/**
 	 * Unload a file from memory. 
