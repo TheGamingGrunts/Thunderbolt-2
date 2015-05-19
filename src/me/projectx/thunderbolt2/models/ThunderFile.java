@@ -229,17 +229,6 @@ public class ThunderFile implements FileLayout{
 		}.start();
 	}
 	
-<<<<<<< HEAD
-=======
-	public JSONObject getJSONObject(){
-		return jo;
-	}
-
-    public void setJSONObject(JSONObject object) {
-        this.jo = object;
-    }
-	
->>>>>>> 6052ec4e32512de95c9732b56271d60162960a09
 	public Set<String> keySet(){
 		return jo.keySet();
 	}
