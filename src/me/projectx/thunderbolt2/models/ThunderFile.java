@@ -1,19 +1,15 @@
 package me.projectx.thunderbolt2.models;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import me.projectx.thunderbolt2.interfaces.FileLayout;
 import me.projectx.thunderbolt2.org.json.JSONArray;
 import me.projectx.thunderbolt2.org.json.JSONObject;
 import me.projectx.thunderbolt2.utils.Validator;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.*;
 
 /**
  * File class containing numerous useful methods for 
@@ -34,6 +30,7 @@ public class ThunderFile implements FileLayout{
 	public ThunderFile(String name, String path){
 		this.path = path;
 		this.name = Validator.checkName(name);
+
 		File f = new File(path + File.separator + name + ".json");
 		if (!f.exists()){
 			try {
@@ -232,6 +229,17 @@ public class ThunderFile implements FileLayout{
 		}.start();
 	}
 	
+<<<<<<< HEAD
+=======
+	public JSONObject getJSONObject(){
+		return jo;
+	}
+
+    public void setJSONObject(JSONObject object) {
+        this.jo = object;
+    }
+	
+>>>>>>> 6052ec4e32512de95c9732b56271d60162960a09
 	public Set<String> keySet(){
 		return jo.keySet();
 	}
