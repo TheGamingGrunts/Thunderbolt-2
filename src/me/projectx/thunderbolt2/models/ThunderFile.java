@@ -24,7 +24,7 @@ import me.projectx.thunderbolt2.utils.Validator;
 public class ThunderFile implements FileLayout{
 	
 	private final String name, path;
-	private volatile JSONObject jo = new JSONObject();
+	private JSONObject jo = new JSONObject();
 	
 	/**
 	 * @see ThunderFile 
@@ -230,10 +230,6 @@ public class ThunderFile implements FileLayout{
 				}
 			}
 		}.start();
-	}
-	
-	public JSONObject getJSONObject(){
-		return jo;
 	}
 	
 	public Set<String> keySet(){
