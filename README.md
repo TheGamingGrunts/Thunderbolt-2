@@ -12,7 +12,7 @@
 
 ==
 ### Syntax
-The Thunderbolt syntax is extremely simple and easy to use. All you have to do is instantiate the Thunderbolt class.
+The Thunderbolt syntax is extremely simple and easy to use. The recommended way is to instantiate ThunderboltManager using the Thunderbolt implementation:
 
 ```java
 Thunderbolt t = new ThunderboltManager();
@@ -20,7 +20,7 @@ Thunderbolt t = new ThunderboltManager();
 
 OR
 
-You can simply extend the ThunderboltManager class:
+You can simply extend the ThunderboltManager class, if you so choose:
 
 ```java
 public class Example extends ThunderboltManager {
@@ -59,6 +59,8 @@ That's basically it in terms of file manipulation. Now, there are numerous optio
 | getLongList(String key) | Return a Long list from the map with a specified key |
 | getFloatList(String key) | Return a Float list from the map with a specified key |
 | save() | Save the map contents to the JSON file |
+| keySet() | Get a Set containing all of the keys |
+| valueSet() | Get a Set containing all of the values |
 
 ### Example Usage
 
@@ -99,5 +101,3 @@ And here's the output:
 derp
 [String 1, String 2, String 3]
 ```
-
-
