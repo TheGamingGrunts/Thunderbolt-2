@@ -74,7 +74,7 @@ import me.projectx.thunderbolt2.models.ThunderFile;
 public class Example { 
 	
 	public static void main(String[] args){
-		Thunderbolt t = new ThunderboltManager(); //You can also just extend Thunderbolt instead of doing this
+		Thunderbolt t = new ThunderboltManager(); //Or extend ThunderboltManager
 		
 		ThunderFile tf = t.load("test", "C:/Users/Daniel/Desktop");
 		List<String> l = new ArrayList<String>();
