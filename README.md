@@ -1,32 +1,22 @@
 <img src="http://i.imgur.com/FjGH2mG.png" align="center">
 # Thunderbolt 2- Lightning Fast Data Storage
 
-<p>Want an easy and fast way to store your data? Well, look no further! Thunderbolt is a Java file library designed from the ground-up to be as fast as possible, in addition to using a JSON (JavaScript Object Notation) backend for file storage. </p>
+<p>Want an easy and fast way to store your data? Well, look no further! Thunderbolt is a Java file library designed from the ground-up to be as fast, simple, and efficient, in addition to using a JSON (JavaScript Object Notation) backend for file storage. </p>
 
-[Jar Download](https://dl.project-x.me/files/Thunderbolt.jar)
+[Jar Download](https://www.spigotmc.org/resources/thunderbolt-2-lightning-fast-data-storage.3179/)
 
 ##Table of Contents
-- [JavaDocs] (https://docs.project-x.me/thunderbolt)
+- [JavaDocs] (http://http://docs.bluecube.io/thunderbolt/)
 - [Syntax] (https://github.com/TheGamingGrunts/Thunderbolt-2#syntax)
 - [Example Usage] (https://github.com/TheGamingGrunts/Thunderbolt-2#example-usage)
 
 ==
 ### Syntax
-The Thunderbolt syntax is extremely simple and easy to use. The recommended way is to instantiate ThunderboltManager using the Thunderbolt implementation:
+The Thunderbolt syntax is extremely simple and easy to use. Use the following tables to get started, in addition to the JavaDocs listed above.
 
-```java
-Thunderbolt t = new ThunderboltManager();
-```
+**Thunderbolt.java**
 
-OR
-
-You can simply extend the ThunderboltManager class, if you so choose:
-
-```java
-public class Example extends ThunderboltManager {
-```
-
-Afterwards, all you have to do is call one of the following methods
+*All methods in this class are static*
 
 | Method | Explanation |
 |--------|-------------|
@@ -35,7 +25,7 @@ Afterwards, all you have to do is call one of the following methods
 | unload(String name) | Unload a file from memory |
 | delete(String name) | Delete a file and remove it from memory |
 
-That's basically it in terms of file manipulation. Now, there are numerous options within the file wrapper class, ThunderFile, that you can use as well. Here are all of the things that you can do:
+**ThunderFile.java**
 
 | Method | Explanation |
 |--------|-------------|
@@ -65,20 +55,26 @@ That's basically it in terms of file manipulation. Now, there are numerous optio
 ### Example Usage
 
 ```java
-package me.projectx.thunderbolt2.test;
+import io.bluecube.thunderbolt.Thunderbolt;
+import io.bluecube.thunderbolt.exceptions.FileLoadException;
+import io.bluecube.thunderbolt.io.ThunderFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.projectx.thunderbolt2.Thunderbolt;
-import me.projectx.thunderbolt2.models.ThunderFile;
 
-public class Example { 
-	
+public class Test{
+
 	public static void main(String[] args){
-		Thunderbolt t = new ThunderboltManager(); //Or extend ThunderboltManager
-		
-		ThunderFile tf = t.load("test", "C:/Users/Daniel/Desktop");
+		ThunderFile tf = null;
+		try {
+			tf = Thunderbolt.load("test", "C:/Users/Daniel/Desktop");
+		} catch(FileLoadException e) {
+			e.printStackTrace();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 		List<String> l = new ArrayList<String>();
 		l.add("String 1");
 		l.add("String 2");
@@ -86,7 +82,11 @@ public class Example {
 		tf.set("List", l);
 		tf.set("Double", 2.5);
 		tf.set("herp", "derp");
-		tf.save();
+		try {
+			tf.save();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 		System.out.println(tf.getDouble("Double"));
 		System.out.println(tf.getString("herp"));
 		System.out.println(tf.getStringList("List"));
@@ -101,3 +101,17 @@ And here's the output:
 derp
 [String 1, String 2, String 3]
 ```
+And here's what the file looks like:
+
+```java
+{
+  "List": [
+    "String 1",
+    "String 2",
+    "String 3"
+  ],
+  "herp": "derp",
+  "Double": 2.5
+}
+```
+
