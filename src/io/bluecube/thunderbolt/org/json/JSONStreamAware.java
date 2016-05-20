@@ -1,4 +1,4 @@
-package me.projectx.thunderbolt2.org.json;
+package io.bluecube.thunderbolt.org.json;
 
 import java.io.IOException;
 import java.io.Writer;

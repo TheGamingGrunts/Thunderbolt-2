@@ -1,4 +1,4 @@
-package me.projectx.thunderbolt2.org.json;
+package io.bluecube.thunderbolt.org.json;
 
 /**
  * The <code>JSONString</code> interface allows a <code>toJSONString()</code>

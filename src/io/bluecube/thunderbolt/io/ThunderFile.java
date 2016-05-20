@@ -1,15 +1,20 @@
-package me.projectx.thunderbolt2.models;
+package io.bluecube.thunderbolt.io;
 
-import me.projectx.thunderbolt2.interfaces.FileLayout;
-import me.projectx.thunderbolt2.org.json.JSONArray;
-import me.projectx.thunderbolt2.org.json.JSONObject;
-import me.projectx.thunderbolt2.utils.Validator;
+import io.bluecube.thunderbolt.Thunderbolt;
+import io.bluecube.thunderbolt.org.json.JSONArray;
+import io.bluecube.thunderbolt.org.json.JSONObject;
+import io.bluecube.thunderbolt.utils.Validator;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.*;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * File class containing numerous useful methods for 
@@ -17,7 +22,7 @@ import java.util.*;
  * 
  * @author Daniel S. (The Gaming Grunts)
  */
-public class ThunderFile implements FileLayout{
+public class ThunderFile {
 	
 	private final String name, path;
 	private JSONObject jo = new JSONObject();
@@ -35,10 +40,12 @@ public class ThunderFile implements FileLayout{
 		if (!f.exists()){
 			try {
 				f.createNewFile();
-				System.out.println("[Thunderbolt 2] Created new file " + name + ".json at " + path);
+				System.out.println("[Thunderbolt] Created new file " + name + ".json at " + path);
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
+		}else{
+			System.out.println("[Thunderbolt] A file named '" + name + ".json' already exists at the specified path, " + path);
 		}
 	}
 	
@@ -53,79 +60,141 @@ public class ThunderFile implements FileLayout{
 		jo = new JSONObject(jsonData);
 	}
 	
+	/**
+	 * Get the name of the file
+	 * 
+	 * @return The name of the File
+	 */
 	public String getName(){
 		return name;
 	}
 	
+	/**
+	 * Get the path to the file
+	 * 
+	 * @return The path to the file
+	 */
 	public String getPath(){
 		return path;
 	}
 	
+	/**
+	 * Set an object in the file's map. This works like any old Map.
+	 * 
+	 * @param key : The key
+	 * @param value : The value
+	 */
 	public void set(String key, Object value){
 		jo.put(key, value);
 	}
 	
+	/**
+	 * Get an object by a specified key
+	 * 
+	 * @param key : The key associated with the object
+	 * @return The object associated with this key
+	 */
 	public Object get(String key){
 		return jo.get(key);
 	}
 	
+	/**
+	 * Get a String by a specific key
+	 * 
+	 * @param key : The key associated with this String
+	 * @return The String associated with this key
+	 */
 	public String getString(String key){
 		return (String)jo.get(key);
 	}
 	
+	/**
+	 * Get a Byte by a specific key
+	 * 
+	 * @param key : The key associated with this Byte
+	 * @return The Byte associated with this key
+	 */
 	public byte getByte(String key){
 		return (byte)jo.get(key);
 	}
 	
+	/**
+	 * Get a Short by a specific key
+	 * 
+	 * @param key : The key associated with this Short
+	 * @return The Short associated with this key
+	 */
 	public short getShort(String key){
 		return (short)jo.get(key);
 	}
 	
+	/**
+	 * Get an Integer by a specific key
+	 * 
+	 * @param key : The key associated with this Integer
+	 * @return The Integer associated with this key
+	 */
 	public int getInt(String key){
 		return (int)jo.get(key);
 	}
 	
+	/**
+	 * Get a Double by a specific key
+	 * 
+	 * @param key : The key associated with this Double
+	 * @return The Double associated with this key
+	 */
 	public double getDouble(String key){
 		return (double)jo.get(key);
 	}
 	
+	/**
+	 * Get a Long by a specific key
+	 * 
+	 * @param key : The key associated with this Long
+	 * @return The Long associated with this key
+	 */
 	public long getLong(String key){
 		return (long)jo.get(key);
 	}
 	
+	/**
+	 * Get a Float by a specific key
+	 * 
+	 * @param key : The key associated with this Float
+	 * @return The Float associated with this key
+	 */
 	public float getFloat(String key){
 		return (float)jo.get(key);
 	}
 	
+	/**
+	 * Get a Boolean by a specific key
+	 * 
+	 * @param key : The key associated with this Boolean
+	 * @return The Boolean associated with this key
+	 */
 	public boolean getBoolean(String key){
 		return (boolean)jo.get(key);
 	}
     
-	/**
-	 * Courtesy of the Bukkit Project 
-	 * {@link https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/configuration/MemorySection.java#L355}
-	 */
-	private List<?> getList(String key, List<?> l){
-		Object o = jo.get(key);
-		return (List<?>) ((o instanceof List) ? o : l);
-		
-	}
 	
-	/**
-	 * Modified from the Bukkit Project 
-	 * 
-	 * {@link https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/configuration/MemorySection.java#L360}
-	 */
-    private List<?> getList(String key) {
+	private List<?> getList(String key) {
         Object o = jo.get(key);
         List<Object> l = new ArrayList<Object>();
         JSONArray ja = new JSONArray(o.toString());
         for (int i = 0; i < ja.length(); i++){
         	l.add(ja.get(i));
         }
-        return getList(path, (o instanceof List) ? (List<?>) o : l);
+        return l;
     }
     
+	/**
+	 * Get a List containing various Strings
+	 * 
+	 * @param key : The key associated with this list
+	 * @return String List
+	 */
     public List<String> getStringList(String key){
     	List<?> temp = getList(key);
     	List<String> list = new ArrayList<String>();
@@ -137,6 +206,12 @@ public class ThunderFile implements FileLayout{
     	return list;
     }
     
+    /**
+	 * Get a List containing various Bytes
+	 * 
+	 * @param key : The key associated with this list
+	 * @return Byte List
+	 */
     public List<Byte> getByteList(String key){
     	List<?> temp = getList(key);
     	List<Byte> list = new ArrayList<Byte>();
@@ -150,6 +225,12 @@ public class ThunderFile implements FileLayout{
     	return list;
     }
     
+    /**
+	 * Get a List containing various Shorts
+	 * 
+	 * @param key : The key associated with this list
+	 * @return Short List
+	 */
     public List<Short> getShortList(String key){
     	List<?> temp = getList(key);
     	List<Short> list = new ArrayList<Short>();
@@ -163,6 +244,12 @@ public class ThunderFile implements FileLayout{
     	return list;
     }
     
+    /**
+	 * Get a List containing various Integers
+	 * 
+	 * @param key : The key associated with this list
+	 * @return Integer List
+	 */
     public List<Integer> getIntList(String key){
     	List<?> temp = getList(key);
     	List<Integer> list = new ArrayList<Integer>();
@@ -176,6 +263,12 @@ public class ThunderFile implements FileLayout{
     	return list;
     }
     
+    /**
+	 * Get a List containing various Doubles
+	 * 
+	 * @param key : The key associated with this list
+	 * @return Double List
+	 */
     public List<Double> getDoubleList(String key){
     	List<?> temp = getList(key);
     	List<Double> list = new ArrayList<Double>();
@@ -189,6 +282,12 @@ public class ThunderFile implements FileLayout{
     	return list;
     }
     
+    /**
+	 * Get a List containing various Longs
+	 * 
+	 * @param key : The key associated with this list
+	 * @return Long List
+	 */
     public List<Long> getLongList(String key){
     	List<?> temp = getList(key);
     	List<Long> list = new ArrayList<Long>();
@@ -202,6 +301,12 @@ public class ThunderFile implements FileLayout{
     	return list;
     }
     
+    /**
+	 * Get a List containing various Floats
+	 * 
+	 * @param key : The key associated with this list
+	 * @return Float List
+	 */
     public List<Float> getFloatList(String key){
     	List<?> temp = getList(key);
     	List<Float> list = new ArrayList<Float>();
@@ -215,24 +320,40 @@ public class ThunderFile implements FileLayout{
     	return list;
     }
 	
+    /**
+	 * Save this file to disk
+	 * 
+	 * @throws IOException 
+	 */
 	public void save() throws IOException{
-		new Thread(){
+		Runnable r = new Runnable(){
 			public void run(){
 				try {
-					PrintWriter writer = new PrintWriter(new FileWriter(path + File.separator + name + ".json", false));
+					Writer writer = new PrintWriter(new FileWriter(path + File.separator + name + ".json", false));
 					writer.write(jo.toString(2));
 					writer.close();
 				} catch(IOException e) {
 					e.printStackTrace();
 				}
 			}
-		}.start();
+		};
+		Thunderbolt.getThreadPool().submit(r);
 	}
 	
+	/**
+	 * Get a Set containing all the keys in the map
+	 * 
+	 * @return A Set containing all keys
+	 */
 	public Set<String> keySet(){
 		return jo.keySet();
 	}
 	
+	/**
+	 * Get a Set containing all the values in the map
+	 * 
+	 * @return A Set containing all the values
+	 */
 	public Set<Object> valueSet(){
 		Set<Object> set = new HashSet<Object>();
 		Iterator<String> i = jo.keys();

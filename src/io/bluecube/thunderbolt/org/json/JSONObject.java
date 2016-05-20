@@ -1,4 +1,4 @@
-package me.projectx.thunderbolt2.org.json;
+package io.bluecube.thunderbolt.org.json;
 
 /*
  Copyright (c) 2002 JSON.org

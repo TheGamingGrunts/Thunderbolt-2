@@ -1,4 +1,4 @@
-package me.projectx.thunderbolt2.org.json;
+package io.bluecube.thunderbolt.org.json;
 
 /**
  * The JSONException is thrown by the JSON.org classes when things are amiss.
