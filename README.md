@@ -93,7 +93,7 @@ public class Test{
 	}
 }
 ```
-And here's the output:
+Here's the output:
 
 ```java
 [Thunderbolt 2] Loaded test.json
