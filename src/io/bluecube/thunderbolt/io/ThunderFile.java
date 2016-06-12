@@ -1,6 +1,5 @@
 package io.bluecube.thunderbolt.io;
 
-import io.bluecube.thunderbolt.Thunderbolt;
 import io.bluecube.thunderbolt.org.json.JSONArray;
 import io.bluecube.thunderbolt.org.json.JSONObject;
 import io.bluecube.thunderbolt.utils.Validator;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -319,6 +319,39 @@ public class ThunderFile {
     	}
     	return list;
     }
+    
+    /**
+     * Get an array given a key
+     * 
+     * @param key The key associated with the array
+     * @return A generic object array
+     * @throws IllegalArgumentException Value is not an array
+     */
+	@SuppressWarnings("unchecked")
+	public <T> T[] getArray(String key){
+    	Object array = jo.get(key);
+    	if (array instanceof Object[]){
+    		return (T[]) jo.get(key);
+    	}else{
+    		throw new IllegalArgumentException("Value associated with key '" + key + "' is not an Array");
+    	}
+    }
+    
+	/**
+	 * Get a Map given a key
+	 * 
+	 * @param key The key associated with the Map
+	 * @return A Map
+	 * @throws IllegalArgumentException Value is not a Map
+	 */
+    public Map<?, ?> getMap(String key){
+    	Object map = jo.get(key);
+    	if (map instanceof Map){
+    		return (Map<?, ?>) jo.get(key);
+    	}else{
+    		throw new IllegalArgumentException("Value associated with key '" + key + "' is not an instance of Map");
+    	}
+    }
 	
     /**
 	 * Save this file to disk
@@ -337,7 +370,7 @@ public class ThunderFile {
 				}
 			}
 		};
-		Thunderbolt.getThreadPool().submit(r);
+		ThunderboltThreadPool.getPool().submit(r);
 	}
 	
 	/**
