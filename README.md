@@ -3,7 +3,7 @@
 
 <p>Want an easy and fast way to store your data? Well, look no further! Thunderbolt is a Java file library designed from the ground-up to be as fast, simple, and efficient, in addition to using a JSON (JavaScript Object Notation) backend for file storage. </p>
 
-[Jar Download](https://www.spigotmc.org/resources/thunderbolt-2-lightning-fast-data-storage.3179/)
+[Jar Download](https://www.spigotmc.org/resources/thunderbolt-lightning-fast-data-storage.3179/)
 
 ##Table of Contents
 - [JavaDocs] (http://http://docs.bluecube.io/thunderbolt/)
