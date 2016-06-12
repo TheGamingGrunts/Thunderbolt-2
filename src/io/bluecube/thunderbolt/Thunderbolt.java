@@ -2,6 +2,7 @@ package io.bluecube.thunderbolt;
 
 import io.bluecube.thunderbolt.exceptions.FileLoadException;
 import io.bluecube.thunderbolt.io.ThunderFile;
+import io.bluecube.thunderbolt.io.ThunderboltThreadPool;
 import io.bluecube.thunderbolt.utils.Validator;
 
 import java.io.File;
@@ -13,13 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public abstract class Thunderbolt {
 
     private final static Map<String, ThunderFile> fileMap = new HashMap<String, ThunderFile>();
-    private static ExecutorService pool = Executors.newCachedThreadPool();
 
     /**
 	 * Get a file by its name. Doesn't require .json extension. This method is thread-safe
@@ -34,15 +32,6 @@ public abstract class Thunderbolt {
         synchronized (fileMap) {
             return fileMap.get(name);
         }
-    }
-    
-    /**
-     * Get the thread pool
-     * 
-     * @return The thread pool
-     */
-    public static ExecutorService getThreadPool(){
-    	return pool;
     }
 
     private static ThunderFile create(String name, String path) throws FileLoadException {
@@ -93,7 +82,7 @@ public abstract class Thunderbolt {
 						}
     				};
     				try {
-						tf = new ThunderFile(name, path, new String(Thunderbolt.getThreadPool().submit(c).get()));
+						tf = new ThunderFile(name, path, new String(ThunderboltThreadPool.getPool().submit(c).get()));
 					} catch(InterruptedException | ExecutionException e) {
 						tf = new ThunderFile(name, path);
 						System.out.println("[Thunderbolt] Error loading '" + name + ".json'. Please check for errors and try again.");
